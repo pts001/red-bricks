@@ -1,0 +1,84 @@
+{% extends "redbricks/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="form-card mt-2">
+                <img src="{{ user.userprofile.image.url }}" class="rounded-circle float-center" style="width: 180px; height: 180px;">
+                <div class="card-header">
+                    <h2>{{ user.username }}</h2>
+                    <a href="#">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                    <div class="list-group-item">
+                       <h4>Email Id :</h4><span>{{ user.email }}</span>
+                        <a id="email" href="#">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <div class="form-group" id="email-form" style="display: none;">
+                            {% csrf_token %}
+                            <input name="email" placeholder="Enter Email">
+                            <input id="email-btn" type="submit" class="btn btn-primary btn-sm" value="Update">
+                        </div>
+                    </div>
+                    {% if user.userprofile.name %}
+                        <div class="list-group-item">
+                            <h4>Full Name :</h4><span>{{ user.userprofile.name }}</span>
+                            <a href="#" class="name">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <div class="form-group name-form" style="display: none;">
+                                 {% csrf_token %}
+                                <input name="mail" placeholder="Enter Email">
+                                <input type="submit" class="btn btn-primary btn-sm" value="Update">
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="list-group-item">
+                            <h4>Full Name :</h4>
+                            <a href="#" class="name">Add Your Name <i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
+                            <div class="form-group name-form" style="display: none;">
+                                {% csrf_token %}
+                                <input name="full_name" placeholder="Enter Full Name">
+                                <input type="submit" class="btn btn-primary btn-sm name-btn" value="Update">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if user.userprofile.current_city %}
+                        <div class="list-group-item">
+                            <h4>Current City :</h4><span>{{ user.userprofile.current_city }}</span>
+                            <a href="#">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        </div>
+                    {% else %}
+                        <div class="list-group-item">
+                            <h4>Current City :</h4>
+                            <a href="#">Add City <i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
+                        </div>
+                    {% endif %}
+                    <div class="list-group-item">
+                        email:
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mt-2">
+            <h4>My Reviews</h4>
+            <hr>
+        {% for review in my_reviews %}
+          <div class="media border bg-white p-3">
+            <img src="{{ review.restaurant.restaurant_pic.url }}" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:80px; height:80px">
+            <div class="media-body">
+              <h5>{{ review.restaurant }}<small><i> Posted on February 19, 2016</i></small></h5>
+              <div class="ratings">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-half-o checked"></span>
+                <span class="fa fa-star-o"></span><br>
+                <small class="text text-muted">{{ review.ratings }} Ratings by - {{ review.reviewer }}</small>
+            </div>
+            <p>{{ review.comments }}</p>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

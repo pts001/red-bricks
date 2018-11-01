@@ -1,0 +1,130 @@
+<div class="jumbotron jumbotron-fluid jambo-bg mb-0">
+ <div class="container-fluid">
+  <h1 class="text text-white">Red-Bricks.Com</h1>
+  <p>Find, Rate and Review your best Resturants Near You...</p>
+ </div>
+</div>
+{% extends "redbricks/base.html" %}
+{% block content %}
+      <!-- home page -->
+  <div class="row pt-2">
+    <div class="col-md-9">
+      <div class="row">
+        {% for restaurant in restaurants %}
+          <div class="col-sm-4">
+            <div class="card">
+              <a href="{% url 'redbricks-restaurant' restaurant.pk %}">
+                <img src="{{ restaurant.restaurant_pic.url }}" alt="Denim Jeans" style="width:100%; max-height: 200px;">
+                <h3 class="text text-secondary">{{ restaurant.res_name }}</h3>
+              </a>
+              <p class="price">{{ restaurant.city }}</p>
+              <p>Some text about the jeans..</p>
+              <div class="ratings">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <small> average based on {{ restaurant.reviews_set.count }} reviews</small>
+                  <hr style="border:3px solid #f1f1f1">
+                <button class="btn btn-secondary">Rate this..</button>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-3">
+
+    <!-- collpsable items   -->
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link text text-secondary item-hover" data-toggle="collapse" href="#collapseOne">
+              View Resturents by Catagory
+            </a>
+          </div>
+          <div id="collapseOne" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="#">South Indian</a>
+                    <span class="badge badge-primary badge-pill">{{ restaurants.count }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="#">North Indian</a>
+                    <span class="badge badge-primary badge-pill">50</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="#">Chinese</a>
+                    <span class="badge badge-primary badge-pill">99</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="#">Veg Only</a>
+                    <span class="badge badge-primary badge-pill">99</span>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link text text-secondary" data-toggle="collapse" href="#collapseTwo">
+              View Resturents by city
+            </a>
+          </div>
+          <div id="collapseTwo" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Delhi
+                    <span class="badge badge-primary badge-pill">12</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Bangalore
+                    <span class="badge badge-primary badge-pill">50</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Kolkata
+                    <span class="badge badge-primary badge-pill">99</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Chennai
+                    <span class="badge badge-primary badge-pill">99</span>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link text text-secondary item-hover" data-toggle="collapse" href="#collapseThree">
+              Pet Groomings
+            </a>
+          </div>
+          <div id="collapseThree" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Dogs
+                    <span class="badge badge-primary badge-pill">12</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Cats
+                    <span class="badge badge-primary badge-pill">50</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Others
+                    <span class="badge badge-primary badge-pill">99</span>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+{% endblock %}

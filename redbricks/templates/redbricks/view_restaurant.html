@@ -1,0 +1,141 @@
+{% extends "redbricks/base.html" %}
+{% block content %}
+      <!-- home page -->
+  <div class="row pt-2">
+    <div class="col-md-9">
+      <div class="res-card">
+          <h3>{{ restaurant.res_name }}</h3>
+          <button class="bg-warning" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-star-o" aria-hidden="true"></i> Write A Review</button>
+            <div class="ratings">
+                <span class="heading">User Rating</span>
+              {% if avg_ratings.ratings__avg < 1 %}
+                <span class="fa fa-star-half-o checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif avg_ratings.ratings__avg < 2 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-half-o checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+              {% elif avg_ratings.ratings__avg < 3 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-half-o checked"></span>
+                <span class="fa fa-star"></span>
+              {% elif avg_ratings.ratings__avg < 4 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-half-o checked"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif avg_ratings.ratings__avg < 5 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-half-o checked"></span>
+              {% endif %}
+                <p class="text text-muted"> {{avg_ratings.ratings__avg | floatformat:1}} average based on {{ restaurant.reviews_set.count }} reviews</p>
+                <hr style="border:3px solid #f1f1f1">
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <h5>Timings: </h5>
+                <span>Mon: 5pm - 12am</span><br>
+                <span>Mon: 5pm - 12am</span><br>
+                <span>Mon: 5pm - 12am</span><br>
+                <span>Mon: 5pm - 12am</span><br>
+                <span>Mon: 5pm - 12am</span><br>
+                <span class="text text-success">Open Now!</span>
+              </div>
+              <div class="col-md-4">
+                <p class="text text-danger">Photos added to reviews</p>
+                <div class="container-img">
+                  <img src="{{ restaurant.restaurant_pic.url }}" alt="Avatar" class="image" style="width:100%">
+                  <div class="middle">
+                    <div class="text-img">
+                      <a href="#" class="text text-secondary"><i class="fa fa-picture-o" aria-hidden="true"></i> See all 12 photos</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 ml-4">
+                <div class="card ml-4">
+                  <h5>Special Menus: </h5>
+                  <span>Alu Fry</span>
+                  <span>Mung Dal</span>
+                  <span>dim</span>
+                </div>
+              </div>
+            </div>
+      </div>
+        <!--reviews-->
+      <h3 class="mt-4">Recent Reviews</h3>
+       {% for review in reviews %}
+        <div class="media border bg-white p-3">
+          <img src="{{ review.reviewer.userprofile.image.url }}" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px; height:60px">
+          <div class="media-body">
+            <h5>{{ review.reviewer }}<small><i> Posted on {{ review.date_posted | date:'D, d/M/y' }}</i></small></h5>
+            <div class="ratings">
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star-half-o checked"></span>
+              <span class="fa fa-star-o"></span><br>
+              <small class="text text-muted">{{ review.ratings }} Ratings by - {{ review.reviewer }}</small>
+          </div>
+          <p>{{ review.comments }}</p>
+          </div>
+        </div>
+       {% endfor %}
+    </div>
+    <div class="col-md-3">
+     <div class="bg-white p-2">
+       <h5><i class="fa fa-map-marker" aria-hidden="true"></i> Location</h5>
+       <div class="p-2">
+         <span>{{ restaurant.address }}</span><br>
+         <span>{{ restaurant.city }}</span>
+       </div>
+       <span><i class="fa fa-phone" aria-hidden="true"></i> {{ restaurant.contact_no }}</span>
+      </div>
+     <div id="map"></div>
+      <p>View Location on map</p>
+    </div>
+
+
+<!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-warning" id="exampleModalLongTitle">Rate this restaurant..</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4">
+          <h3 id="msg" class="text-center" style="display:none;">Done.</h3>
+          <div id="rat-form" rat_url="{{ restaurant.pk }}" class="text-center">
+                      {% csrf_token %}
+            <input type="text" class="form-control mb-4" name="review" placeholder="Write Reviews...">
+            <button class="btn btn-danger btn-block">
+              <span class="rat-btn fa fa-star" id="1st"></span>
+              <span class="rat-btn fa fa-star" id="2nd"></span>
+              <span class="rat-btn fa fa-star" id="3rd"></span>
+              <span class="rat-btn fa fa-star" id="4th"></span>
+              <span class="rat-btn fa fa-star" id="5th"></span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Skip>></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
