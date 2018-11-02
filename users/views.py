@@ -30,10 +30,16 @@ def update_email(request):
     profile = UserProfile.objects.filter(user=request.user).first()
     if request.method == 'POST':
         print(request.POST['email'])
-    return render(request,'users/profile.html')
+    return render(request,'users/update_email.html')
 
 
 def update_full_name(request):
     if request.method == 'POST':
         print(request.POST['full_name'])
-    return render(request,'users/profile.html')
+    return render(request,'users/update_name.html')
+
+
+def update_city(request):
+    if request.method == 'POST':
+        print(request.POST['city'])
+    return render(request,'users/update_city.html')

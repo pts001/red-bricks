@@ -222,8 +222,8 @@ padding: 0;
 }
 
 .pr-card {
-    width:200px;
-    height:350px;
+    width:160px;
+    height:200px;
     background-color: #ffff;
     position:absolute;
     z-index:4;

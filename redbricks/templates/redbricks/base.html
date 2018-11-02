@@ -38,14 +38,14 @@
         </ul>
         {% if user.is_active %}
           <ul class="navbar-nav ml-auto mr-4">
-            <li class="nav-item active">
-              <a class="nav-link item-hover" id="my-pr"><i class="fa fa-user-circle" aria-hidden="true"></i> My Profile</a>
+            <li class="nav-item active item-hover">
+              <a href="#" class="nav-link" id="my-pr"><i class="fa fa-user-circle" aria-hidden="true"></i> My Profile</a>
             </li>
           </ul>
           <div class="pr-card card" style="display:none">
             <div class="card-header">
-              <img src="{{ user.userprofile.image.url }}" class="rounded-circle float-center" style="width: 60px; height: 60px;">
-              <span>{{ user.userprofile.name }}</span>
+              <img src="{{ user.userprofile.image.url }}" class="rounded-circle float-center" style="width: 40px; height: 40px;">
+              <span>{{ user.username }}</span>
             </div>
             <div class="card-body">
               <a href="{% url 'profile' %}" class="text text-secondary"><i class="fa fa-wrench" aria-hidden="true"></i> Edit Profile </a>

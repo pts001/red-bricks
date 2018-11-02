@@ -13,7 +13,8 @@ function initMap() {
 
 //profile-card
 $(document).ready(function(){
-    $('#my-pr').click(function(){
+    $('#my-pr').click(function(e){
+        e.preventDefault();
         $('.pr-card').toggle();
     });
 });
@@ -85,15 +86,20 @@ $(document).ready(function(){
      });
 });
 
-//profile-update
+//profile-update -- with ajax//
 
+//update-email
 $(document).ready(function(){
-    $('#email').click(function(e){
+    $(this).on('click','#email',function(e){
         e.preventDefault();
         $(this).fadeOut();
         $('#email-form').fadeIn();
     });
-    $('#email-btn').click(function(){
+    $(this).on('click','#email-dismis',function(e){
+        $('#email').fadeIn();
+        $('#email-form').fadeOut();
+    });
+    $(this).on('click','#email-btn',function(){
         req = $.ajax({
             type:'POST',
             url: 'update/email',
@@ -104,12 +110,21 @@ $(document).ready(function(){
             }
 
         });
+        req.done(function(data){
+            $('#item-1').fadeOut().fadeIn();
+            $('#item-1').html(data);
+        });
     });
 
-    $('.name').click(function(e){
+//udate-name
+    $(this).on('click','.name',function(e){
         e.preventDefault();
         $(this).fadeOut();
         $('.name-form').fadeIn();
+    });
+    $(this).on('click','.name-dismis',function(e){
+        $('.name').fadeIn();
+        $('.name-form').fadeOut();
     });
     $('.name-btn').click(function(){
         req = $.ajax({
@@ -119,7 +134,35 @@ $(document).ready(function(){
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                 full_name: $('input[name=full_name]').val(),
                  }
+        });
+        req.done(function(data){
+            $('#item-2').fadeOut().fadeIn();
+            $('#item-2').html(data);
+        });
+    });
 
+//update-city
+    $(this).on('click','.city',function(e){
+        e.preventDefault();
+        $(this).fadeOut();
+        $('.city-form').fadeIn();
+    });
+    $(this).on('click','.city-dismis',function(e){
+        $('.city').fadeIn();
+        $('.city-form').fadeOut();
+    });
+    $(this).on('click','.city-btn',function(){
+        req = $.ajax({
+            type:'POST',
+            url: 'update/city',
+            data:{
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                city: $('input[name=city]').val(),
+                 }
+        });
+        req.done(function(data){
+            $('#item-3').fadeOut().fadeIn();
+            $('#item-3').html(data);
         });
     });
 });

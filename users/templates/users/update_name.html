@@ -1,0 +1,25 @@
+<div id="item-2">
+{% if user.userprofile.name %}
+    <div class="list-group-item">
+        <h4>Full Name :</h4><span>{{ user.userprofile.name }}</span>
+        <a href="#" class="name">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+        <div class="form-group name-form" style="display: none;">
+             {% csrf_token %}
+            <input name="name" placeholder="Enter Full Name">
+            <input type="submit" class="btn btn-primary btn-sm name-btn" value="Update">
+            <i class="fa fa-times ml-4 name-dismis" aria-hidden="true"></i>
+        </div>
+    </div>
+{% else %}
+    <div class="list-group-item">
+        <h4>Full Name :</h4>
+        <a href="#" class="name">Add Your Name <i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
+        <div class="form-group name-form" style="display: none;">
+            {% csrf_token %}
+            <input name="full_name" placeholder="Enter Full Name">
+            <input type="submit" class="btn btn-primary btn-sm name-btn" value="Update">
+            <i class="fa fa-times ml-4 name-dismis" aria-hidden="true"></i>
+        </div>
+    </div>
+{% endif %}
+</div>
