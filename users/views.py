@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import RegisterForm
-from redbricks.models import Restaurants, Reviews
-from .models import UserProfile
+from .forms import RegisterForm, ProfilePicForm
+from redbricks.models import Reviews
+from .models import UserProfile, User
 
 
 def register(request):
@@ -22,24 +22,53 @@ def register(request):
 @login_required
 def profile(request):
     my_reviews = Reviews.objects.filter(reviewer=request.user)
-    context = {'my_reviews':my_reviews}
+    if request.method == 'POST':
+        form = ProfilePicForm(request.POST, request.FILES, instance=request.user.userprofile)
+        if form.is_valid:
+            form.save()
+            return redirect('profile')
+    else:
+        form=ProfilePicForm()
+    context = {'my_reviews':my_reviews,
+               'form':form}
     return render(request, 'users/profile.html', context)
+
+
+# def update_username(request):
+#     profile = UserProfile.objects.filter(user=request.user).first()
+#     if request.method == 'POST':
+#         user = User.objects.filter(email=request.POST['email']).first()
+#         if user:
+#             return HttpResponse(status=422)
+#         else:
+#             profile.user.email = request.POST['email']
+#             profile.user.save()
+#     return render(request,'users/update_email.html')
 
 
 def update_email(request):
     profile = UserProfile.objects.filter(user=request.user).first()
     if request.method == 'POST':
-        print(request.POST['email'])
+        user = User.objects.filter(email=request.POST['email']).first()
+        if user:
+            return HttpResponse(status=422)
+        else:
+            profile.user.email = request.POST['email']
+            profile.user.save()
     return render(request,'users/update_email.html')
 
 
 def update_full_name(request):
+    profile = UserProfile.objects.filter(user=request.user).first()
     if request.method == 'POST':
-        print(request.POST['full_name'])
-    return render(request,'users/update_name.html')
+        profile.name = request.POST['full_name']
+        profile.save()
+        return render(request,'users/update_name.html')
 
 
 def update_city(request):
+    profile = UserProfile.objects.filter(user=request.user).first()
     if request.method == 'POST':
-        print(request.POST['city'])
+        profile.current_city = request.POST['city']
+        profile.save()
     return render(request,'users/update_city.html')

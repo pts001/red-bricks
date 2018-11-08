@@ -45,3 +45,4 @@ class Reviews(models.Model):
 
     def __str__(self):
         return '{} {} {}'.format(self.restaurant.res_name, self.ratings, self.comments)
+
