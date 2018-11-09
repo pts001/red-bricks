@@ -34,16 +34,16 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 
-# def update_username(request):
-#     profile = UserProfile.objects.filter(user=request.user).first()
-#     if request.method == 'POST':
-#         user = User.objects.filter(email=request.POST['email']).first()
-#         if user:
-#             return HttpResponse(status=422)
-#         else:
-#             profile.user.email = request.POST['email']
-#             profile.user.save()
-#     return render(request,'users/update_email.html')
+def update_username(request):
+    profile = UserProfile.objects.filter(user=request.user).first()
+    if request.method == 'POST':
+        user = User.objects.filter(username=request.POST['username']).first()
+        if user:
+            return HttpResponse(status=422)
+        else:
+            profile.user.username = request.POST['username']
+            profile.user.save()
+    return render(request,'users/update_username.html',{'profile':profile})
 
 
 def update_email(request):
@@ -55,7 +55,7 @@ def update_email(request):
         else:
             profile.user.email = request.POST['email']
             profile.user.save()
-    return render(request,'users/update_email.html')
+    return render(request,'users/update_email.html',{'profile':profile})
 
 
 def update_full_name(request):
@@ -63,7 +63,7 @@ def update_full_name(request):
     if request.method == 'POST':
         profile.name = request.POST['full_name']
         profile.save()
-        return render(request,'users/update_name.html')
+    return render(request,'users/update_name.html')
 
 
 def update_city(request):

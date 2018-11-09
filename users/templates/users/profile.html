@@ -11,15 +11,25 @@
                   </a>
               </div>
                 <div class="card-header">
-                    <h2>{{ user.username }}</h2>
-                    <a href="#">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    <div id="item-0">
+                        <h2>{{ user.username }}</h2>
+                        <a id="username" href="#">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><br>
+                        <small id="username-alert" class="text text-danger" style="display: none;">Username Already Taken, Please choose another!</small>
+                        <div class="form-group" id="username-form" style="display: none;">
+                            {% csrf_token %}
+                            <input name="username" placeholder="Enter Username">
+                            <input id="username-btn" type="submit" class="btn btn-primary btn-sm" value="Update">
+                            <i class="fa fa-times ml-4" id="username-dismis" aria-hidden="true"></i>
+                        </div>
+                      </div>
                 </div>
                 <div class="card-body">
                     <div class="list-group">
                       <div id="item-1">
                         <div class="list-group-item">
                            <h4>Email Id :</h4><span>{{ user.email }}</span>
-                            <a id="email" href="#">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <a id="email" href="#">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><br>
+                            <small id="email-alert" class="text text-danger" style="display: none;">This Email Already Taken, Please choose another!</small>
                             <div class="form-group" id="email-form" style="display: none;">
                                 {% csrf_token %}
                                 <input name="email" placeholder="Enter Email">
@@ -78,9 +88,6 @@
                         </div>
                     {% endif %}
                     </div>
-                    <div class="list-group-item">
-                        email:
-                    </div>
                 </div>
                 </div>
             </div>
@@ -104,6 +111,10 @@
             <p>{{ review.comments }}</p>
             </div>
           </div>
+            <div class="media mb-2">
+                <a  class="btn btn-block btn-info" href="{% url 'redbricks-review-update' review.pk%}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <button class="btn btn-block btn-danger mt-0" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </div>
         {% endfor %}
         </div>
     </div>

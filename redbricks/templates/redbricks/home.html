@@ -18,14 +18,9 @@
                 <h3 class="text text-secondary">{{ restaurant.res_name }}</h3>
               </a>
               <p class="price">{{ restaurant.city }}</p>
-              <p>Some text about the jeans..</p>
               <div class="ratings">
                   <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  <small> average based on {{ restaurant.reviews_set.count }} reviews</small>
+                  <small>Total {{ restaurant.reviews_set.count }} reviews for {{ restaurant.res_name }}</small>
                   <hr style="border:3px solid #f1f1f1">
                 <button class="btn btn-secondary">See Details,,,</button>
               </div>
@@ -48,20 +43,20 @@
             <div class="card-body">
                 <ul class="list-group">
                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#">South Indian</a>
-                    <span class="badge badge-primary badge-pill">{{ restaurants.count }}</span>
+                    <a href="{% url 'redbricks-by_category' 'South Indian' %}">South Indian</a>
+                    <span class="badge badge-primary badge-pill">{{ south.count }}</span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#">North Indian</a>
-                    <span class="badge badge-primary badge-pill">50</span>
+                    <a href="{% url 'redbricks-by_category' 'North Indian' %}">North Indian</a>
+                    <span class="badge badge-primary badge-pill">{{ north.count }}</span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#">Chinese</a>
-                    <span class="badge badge-primary badge-pill">99</span>
+                    <a href="{% url 'redbricks-by_category' 'Chinese' %}">Chinese</a>
+                    <span class="badge badge-primary badge-pill">{{ chinese.count }}</span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#">Veg Only</a>
-                    <span class="badge badge-primary badge-pill">99</span>
+                    <a href="{% url 'redbricks-by_category' 'Veg Only' %}">Veg Only</a>
+                    <span class="badge badge-primary badge-pill">{{ veg.count }}</span>
                   </li>
                 </ul>
             </div>
@@ -78,20 +73,20 @@
             <div class="card-body">
                 <ul class="list-group">
                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Delhi
-                    <span class="badge badge-primary badge-pill">12</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#">Bangalore</a>
+                    <a href="{% url 'redbricks-by_city' 'Bangalore' %}">Bangalore</a>
                     <span class="badge badge-primary badge-pill">{{ res_blr.count }}</span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#">Kolkata</a>
+                    <a href="{% url 'redbricks-by_city' 'Chennai' %}">Chennai</a>
+                    <span class="badge badge-primary badge-pill">{{ res_chn.count }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'redbricks-by_city' 'Kolkata' %}">Kolkata</a>
                     <span class="badge badge-primary badge-pill">{{ res_kol.count }}</span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Chennai
-                    <span class="badge badge-primary badge-pill">99</span>
+                    <a href="{% url 'redbricks-by_city' 'Delhi' %}">Delhi</a>
+                    <span class="badge badge-primary badge-pill">{{ res_dhl.count }}</span>
                   </li>
                 </ul>
             </div>

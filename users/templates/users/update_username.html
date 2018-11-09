@@ -1,0 +1,11 @@
+<div id="item-0">
+    <h2>{{ profile.user.username }}</h2>
+    <a id="username" href="#">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><br>
+    <small id="username-alert" class="text text-danger" style="display: none;">This Email Already Taken, Please choose another!</small>
+    <div class="form-group" id="username-form" style="display: none;">
+        {% csrf_token %}
+        <input name="username" placeholder="Enter Username">
+        <input id="username-btn" type="submit" class="btn btn-primary btn-sm" value="Update">
+        <i class="fa fa-times ml-4" id="username-dismis" aria-hidden="true"></i>
+    </div>
+</div>

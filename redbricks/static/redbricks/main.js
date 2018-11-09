@@ -26,6 +26,34 @@ $(document).ready(function(){
         e.preventDefault();
 
     });
+//update-email
+    $(this).on('click','#username',function(e){
+        e.preventDefault();
+        $(this).fadeOut();
+        $('#username-form').fadeIn();
+    });
+    $(this).on('click','#username-dismis',function(e){
+        $('#username').fadeIn();
+        $('#username-form').fadeOut();
+        $('#username-alert').fadeOut();
+    });
+    $(this).on('click','#username-btn',function(){
+        req = $.ajax({
+            type:'POST',
+            url: 'update/username',
+            error: function (jqXHR, textStatus, errorThrown) {
+                  $('#username-alert').fadeIn();
+              },
+            data:{
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                username: $('input[name=username]').val(),
+                }
+        });
+        req.done(function(data){
+            $('#item-0').fadeOut().fadeIn();
+            $('#item-0').html(data);
+        });
+    });
 
 //update-email
     $(this).on('click','#email',function(e){
@@ -36,13 +64,14 @@ $(document).ready(function(){
     $(this).on('click','#email-dismis',function(e){
         $('#email').fadeIn();
         $('#email-form').fadeOut();
+        $('email-alert').fadeOut();
     });
     $(this).on('click','#email-btn',function(){
         req = $.ajax({
             type:'POST',
             url: 'update/email',
             error: function (jqXHR, textStatus, errorThrown) {
-                  alert('Email Already Exist');
+                  $('#email-alert').fadeIn();
               },
             data:{
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),

@@ -6,19 +6,17 @@
       <form method="post">
           {% csrf_token %}
         <div class="form-card mt-2">
-            <div class="card-header">Review For {{ object.res_name }}</div>
+            <div class="card-header bg-secondary">Review</div>
             <div class="card-body">
                 {{ form | crispy }}
             </div>
             <div class="card-footer">
-                <button class="btn-danger">Sign In</button>
+                <button class="btn-danger">Post</button>
             </div>
         </div>
       </form>
     </div>
     <div class="col-md-5">
-        {{ object.restaurant }}
-        <img src="{{ object.restaurant_pic.url }}">
     </div>
 </div>
 {% endblock %}

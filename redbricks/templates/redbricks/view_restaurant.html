@@ -14,23 +14,47 @@
                 <span class="fa fa-star-o"></span>
                 <span class="fa fa-star-o"></span>
                 <span class="fa fa-star-o"></span>
+              {% elif avg_ratings.ratings__avg == 1 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
               {% elif avg_ratings.ratings__avg < 2 %}
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star-half-o checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif avg_ratings.ratings__avg == 2 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
               {% elif avg_ratings.ratings__avg < 3 %}
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star-half-o checked"></span>
                 <span class="fa fa-star"></span>
+              {% elif avg_ratings.ratings__avg == 3 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
               {% elif avg_ratings.ratings__avg < 4 %}
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star-half-o checked"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif avg_ratings.ratings__avg == 4 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
                 <span class="fa fa-star-o"></span>
               {% elif avg_ratings.ratings__avg < 5 %}
                 <span class="fa fa-star checked"></span>
@@ -38,6 +62,12 @@
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star-half-o checked"></span>
+              {% elif avg_ratings.ratings__avg == 5 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
               {% endif %}
                 <p class="text text-muted"> {{avg_ratings.ratings__avg | floatformat:1}} average based on {{ restaurant.reviews_set.count }} reviews</p>
                 <hr style="border:3px solid #f1f1f1">
@@ -52,8 +82,7 @@
                 <span>Mon: 5pm - 12am</span><br>
                 <span class="text text-success">Open Now!</span>
               </div>
-              <div class="col-md-4">
-                <p class="text text-danger">Photos added to reviews</p>
+              <div class="col-md-4 mt-2">
                 <div class="container-img">
                   <img src="{{ restaurant.restaurant_pic.url }}" alt="Avatar" class="image" style="width:100%">
                   <div class="middle">
@@ -79,17 +108,48 @@
         <div class="media border bg-white p-3">
           <img src="{{ review.reviewer.userprofile.image.url }}" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px; height:60px">
           <div class="media-body">
+            {% if review.reviewer == user %}
+            <div class="float-right">
+              <a class="btn btn-info" href="{% url 'redbricks-review-update' review.pk%}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </div>
+            {% endif %}
             <h5>{{ review.reviewer }}<small><i> Posted on {{ review.date_posted | date:'D, d/M/y' }}</i></small></h5>
-            <a class="btn btn-info" href="{% url 'redbricks-review-update' review.pk%}">Update</a>
-            <button class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">>Del</button>
             <div class="ratings">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star-half-o checked"></span>
-              <span class="fa fa-star-o"></span><br>
-              <small class="text text-muted">{{ review.ratings }} Ratings by - {{ review.reviewer }}</small>
+              {% if review.ratings == 1 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 2 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 3 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 4 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 5 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+              {% endif %}
+              <small class="text text-muted">{{ review.ratings }} Star by - <em>{{ review.reviewer }}</em></small>
           </div>
+          <br>
           <p>{{ review.comments }}</p>
           </div>
         </div>
@@ -130,5 +190,5 @@
      <div id="map"></div>
       <p>View Location on map</p>
     </div>
-
+  </div>
 {% endblock %}
