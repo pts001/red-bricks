@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     def __str__(self):
        return '{} {} {}'.format(self.user.username, self.name, self.current_city)
 
-    def save(self):
+    def save(self, **kwargs):
         super().save()
 
         img = Image.open(self.image.path)
