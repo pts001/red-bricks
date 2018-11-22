@@ -101,13 +101,40 @@
             <div class="media-body">
               <h5>{{ review.restaurant }}<small><i> Posted on February 19, 2016</i></small></h5>
               <div class="ratings">
+              {% if review.ratings == 1 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 2 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 3 %}
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
-                <span class="fa fa-star-half-o checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 4 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 5 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+              {% endif %}
                 <span class="fa fa-star-o"></span><br>
                 <small class="text text-muted">{{ review.ratings }} Ratings by - {{ review.reviewer }}</small>
-            </div>
+              </div>
             <p>{{ review.comments }}</p>
             </div>
           </div>

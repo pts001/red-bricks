@@ -1,12 +1,16 @@
 {% extends "redbricks/base.html" %}
 {% load crispy_forms_tags %}
+{%  load static%}
 {% block content %}
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-3"></div>
+        <div class="col-md-5 m-4">
           <form method="post">
               {% csrf_token %}
-            <div class="form-card mt-2">
-                <div class="card-header">Sign Up Here</div>
+            <div class="form-card mt-4">
+                <div class="card-header">
+                    <img src="{% static 'redbricks/images/logo.jpeg' %}">
+                </div>
                 <div class="card-body">
                     {{ form | crispy }}
                 </div>
@@ -15,21 +19,8 @@
                 </div>
             </div>
           </form>
-        </div>
-        <div class="col-md-1">
-            <h3 class="text text-center">Or</h3>
-        </div>
-        <div class="col-md-5">
-            <div class="form-card mt-2">
-                <div class="card-header">Sign Up With</div>
-                <div class="card-body">
-                </div>
-                <form >
-                    <div class="card-footer">
-                        <button class="btn-danger">Sign Up</button>
-                    </div>
-                </form>
-            </div>
+            <hr>
+            Already Have An Account?<a href="{% url 'login' %}"> Sign In</a>
         </div>
     </div>
 {% endblock %}

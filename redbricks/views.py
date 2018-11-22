@@ -62,7 +62,6 @@ def restaurants_by_city(request, city):
     return render(request, 'redbricks/restaurants_by_category.html',context)
 
 
-
 class CreateRatingsView(LoginRequiredMixin, CreateView):
     model = Reviews
     fields = ['ratings','comments']
