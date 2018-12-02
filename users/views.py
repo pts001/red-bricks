@@ -21,7 +21,6 @@ def register(request):
 
 @login_required
 def profile(request):
-    my_reviews = Reviews.objects.filter(reviewer=request.user)
     if request.method == 'POST':
         form = ProfilePicForm(request.POST, request.FILES, instance=request.user.userprofile)
         if form.is_valid:
@@ -29,8 +28,7 @@ def profile(request):
             return redirect('profile')
     else:
         form=ProfilePicForm()
-    context = {'my_reviews':my_reviews,
-               'form':form}
+    context = {'form':form}
     return render(request, 'users/profile.html', context)
 
 

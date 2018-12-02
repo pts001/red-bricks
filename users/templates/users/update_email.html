@@ -3,6 +3,8 @@
        <h4>Email Id :</h4><span>{{ profile.user.email }}</span>
         <a id="email" href="#">Edit   <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><br>
         <small id="email-alert" class="text text-danger" style="display: none;">This Email Already Taken, Please choose another!</small>
+        <small id="email-valid" class="text text-danger" style="display: none;">Invalid Email!!, Please type an valid email</small>
+        <small id="email-void" class="text text-danger" style="display: none;">Field can't be Empty!! Please type an email Id</small>
         <div class="form-group" id="email-form" style="display: none;">
             {% csrf_token %}
             <input name="email" placeholder="Enter Email">

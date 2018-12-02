@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
 from django.http import HttpResponseForbidden
 from .models import Restaurants, Reviews
 from django.db.models import Avg
@@ -66,6 +67,11 @@ class CreateRatingsView(LoginRequiredMixin, CreateView):
     model = Reviews
     fields = ['ratings','comments']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_reviews'] = Reviews.objects.filter(reviewer= self.request.user)
+        return context
+
     def form_valid(self, form):
         form.instance.reviewer = self.request.user
         form.instance.restaurant = Restaurants.objects.get(pk=self.kwargs['id'])
@@ -78,6 +84,11 @@ class CreateRatingsView(LoginRequiredMixin, CreateView):
 class UpdateRatingsView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
     model = Reviews
     fields = ['ratings','comments']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_reviews'] = Reviews.objects.filter(reviewer= self.request.user)
+        return context
 
     def test_func(self):
         review = self.get_object()

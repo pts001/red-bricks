@@ -16,7 +16,55 @@
         </div>
       </form>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5 ml-4 mt-2">
+        <h4>My Reviews</h4>
+            <hr>
+        {% for review in my_reviews %}
+          <div class="media border bg-white p-3">
+            <img src="{{ review.restaurant.restaurant_pic.url }}" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:80px; height:80px">
+            <div class="media-body">
+              <h5>{{ review.restaurant }}<small><i> Posted on February 19, 2016</i></small></h5>
+              <div class="ratings">
+              {% if review.ratings == 1 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 2 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 3 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 4 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star-o"></span>
+              {% elif review.ratings == 5 %}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+              {% endif %}
+                <span class="fa fa-star-o"></span><br>
+                <small class="text text-muted">{{ review.ratings }} Ratings by - {{ review.reviewer }}</small>
+              </div>
+            <p>{{ review.comments }}</p>
+            </div>
+          </div>
+        {% empty %}
+            No Reviews
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

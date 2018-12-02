@@ -22,6 +22,7 @@ $(document).ready(function(){
     });
 });
 
+
 //profile-update -- with ajax//
 
 $(document).ready(function(){
@@ -59,6 +60,17 @@ $(document).ready(function(){
     });
 
 //update-email
+
+//email validation function
+function validateEmail(sEmail) {
+    var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (filter.test(sEmail)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
     $(this).on('click','#email',function(e){
         e.preventDefault();
         $(this).fadeOut();
@@ -67,27 +79,40 @@ $(document).ready(function(){
     $(this).on('click','#email-dismis',function(e){
         $('#email').fadeIn();
         $('#email-form').fadeOut();
-        $('email-alert').fadeOut();
+        $('#email-alert').fadeOut();
+        $('#email-valid').fadeOut();
+        $('#email-void').fadeOut();
     });
     $(this).on('click','#email-btn',function(){
-        req = $.ajax({
-            type:'POST',
-            url: 'update/email',
-            error: function (jqXHR, textStatus, errorThrown) {
-                  $('#email-alert').fadeIn();
-              },
-            data:{
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                email: $('input[name=email]').val(),
-                }
-        });
-        req.done(function(data){
-            $('#item-1').fadeOut().fadeIn();
-            $('#item-1').html(data);
-        });
+        var sEmail = $('input[name=email]').val();
+        if (sEmail.length == 0){
+            $('#email-void').fadeIn();
+        }
+        else if(validateEmail(sEmail)){
+           req = $.ajax({
+                type:'POST',
+                url: 'update/email',
+                error: function (jqXHR, textStatus, errorThrown) {
+                      $('#email-alert').fadeIn();
+                  },
+                data:{
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    email: sEmail,
+                    }
+            });
+            req.done(function(data){
+                $('#item-1').fadeOut().fadeIn();
+                $('#item-1').html(data);
+                $('#email-alert').fadeIn().fadeOut();
+            });
+        }
+        else{
+            $('#email-valid').fadeIn();
+        }
     });
 
-//udate-name
+//update-name
+
     $(this).on('click','.name',function(e){
         e.preventDefault();
         $(this).fadeOut();
