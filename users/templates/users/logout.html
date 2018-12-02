@@ -1,4 +1,9 @@
 {% extends "redbricks/base.html" %}
-{% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
+    <div class="form-card mt-2 p-4">
+        <img class="mx-auto d-block" src="{% static 'redbricks/images/logo.jpeg' %}" style="width:280px;">
+    <h4 class="text text-muted mt-4">You Are Logged Out!!</h4>
+        <a href="{% url 'login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login Again</a>
+    </div>
 {% endblock %}

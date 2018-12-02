@@ -175,6 +175,27 @@
         </div>
       </div>
        {% endfor %}
+      <div class="mt-2 ">
+        <ul class="pagination">
+          {% if reviews.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ reviews.previous_page_number }}">Previous</a></li>
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+          {% endif %}
+          {% for num in reviews.paginator.page_range %}
+            {% if reviews.number == num %}
+              <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% elif num > reviews.number|add:'-2' and num > reviews.number|add:'2' %}
+              <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if reviews.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ reviews.next_page_number }}">Next</a></li>
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
     <div class="col-md-3">
      <div class="bg-white p-2">

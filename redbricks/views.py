@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from .models import Restaurants, Reviews
 from django.db.models import Avg
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
+from django.core.paginator import Paginator
 
 
 # Function-based Home View for RedBricks App
@@ -31,15 +31,22 @@ def home(request):
     return render(request,'redbricks/home.html',context)
 
 
+def about(request):
+    return render(request,'redbricks/about.html')
+
+
 # View for each individual restaurant in database
 def restaurents(request,id):
     restaurant = Restaurants.objects.get(pk=id)
     reviews = Reviews.objects.filter(restaurant=restaurant).order_by('-date_posted')
+    paginator = Paginator(reviews, 2)
+    page = request.GET.get('page')
+    rev_paginated = paginator.get_page(page)
     avg_rating = reviews.aggregate(Avg('ratings'))
     # reviewer = reviews.reviewer
     context = {'restaurant':restaurant,
                'avg_ratings':avg_rating,
-               'reviews':reviews}
+               'reviews':rev_paginated}
     return render(request, 'redbricks/view_restaurant.html', context)
 
 
@@ -63,14 +70,10 @@ def restaurants_by_city(request, city):
     return render(request, 'redbricks/restaurants_by_category.html',context)
 
 
-class CreateRatingsView(LoginRequiredMixin, CreateView):
+class CreateRatingsView(LoginRequiredMixin, CreateView, ListView):
     model = Reviews
     fields = ['ratings','comments']
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['my_reviews'] = Reviews.objects.filter(reviewer= self.request.user)
-        return context
+    paginate_by = 3
 
     def form_valid(self, form):
         form.instance.reviewer = self.request.user
@@ -81,14 +84,10 @@ class CreateRatingsView(LoginRequiredMixin, CreateView):
         return reverse('redbricks-restaurant',kwargs={'id':self.kwargs['id']})
 
 
-class UpdateRatingsView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+class UpdateRatingsView(LoginRequiredMixin,UserPassesTestMixin, UpdateView, ListView):
     model = Reviews
     fields = ['ratings','comments']
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['my_reviews'] = Reviews.objects.filter(reviewer= self.request.user)
-        return context
+    paginate_by = 3
 
     def test_func(self):
         review = self.get_object()
